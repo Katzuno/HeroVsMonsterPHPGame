@@ -12,6 +12,25 @@ class Hero
     private $skills;
 
     /**
+     * Hero constructor
+     * @param $name
+     * @param $health
+     * @param $strength
+     * @param $defence
+     * @param $speed
+     * @param $luck
+     */
+    public function __construct($name, $health, $strength, $defence, $speed, $luck)
+    {
+        $this->name = $name;
+        $this->health = $health;
+        $this->strength = $strength;
+        $this->defence = $defence;
+        $this->speed = $speed;
+        $this->luck = $luck;
+    }
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -123,5 +142,9 @@ class Hero
         $this->skills = $skills;
     }
 
+    public function addSkill($skill): void
+    {
+        $this->skills[] = $skill;
+    }
 
 }
