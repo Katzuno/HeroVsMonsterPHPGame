@@ -27,4 +27,14 @@ echo '<br/><br/>';
 $hero = HeroFactory::updateAttributes($db, $hero);
 echo '<br/><br/>';
 print_r($hero);
+include 'src/Controllers/MonsterFactory.php';
+echo '<br/>---------- MONSTER -------<br/>';
+$monster = MonsterFactory::create($db, 'Wild Beast', 60, 90, 40, 60, 40, 60, 40, 60, 25, 40);
+//$monster = MonsterFactory::getMonsterByName($db, 'Wild Beast');
+echo '<br/><br/>';
+print_r($monster);
+echo '<br/><br/>';
+$monster = MonsterFactory::updateAttributes($db, $monster);
+echo '<br/><br/>';
+print_r($monster);
 
