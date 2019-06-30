@@ -54,7 +54,7 @@ class MonsterFactory
 
             $monster_ranges = $db->select($sql)[0];
             echo '<br/><br/>';
-            print_r($monster_ranges);
+            //($monster_ranges);
             echo '<br/><br/>';
             $monster->setHealth(rand($monster_ranges['health_min'], $monster_ranges['health_max']) );
             $monster->setStrength(rand($monster_ranges['strength_min'], $monster_ranges['strength_max']) );

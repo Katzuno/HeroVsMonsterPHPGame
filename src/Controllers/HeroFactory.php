@@ -54,7 +54,7 @@ class HeroFactory
 
             $hero_ranges = $db->select($sql)[0];
             echo '<br/><br/>';
-            print_r($hero_ranges);
+            //print_r($hero_ranges);
             echo '<br/><br/>';
             $hero->setHealth(rand($hero_ranges['health_min'], $hero_ranges['health_max']) );
             $hero->setStrength(rand($hero_ranges['strength_min'], $hero_ranges['strength_max']) );
