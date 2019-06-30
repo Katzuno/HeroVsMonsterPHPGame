@@ -10,14 +10,14 @@ class Battle
         $this->monster = $monster;
     }
 
-    public function start()
+    public function start($maxRounds = 20)
     {
         // Decide first attacker
         // Fight has the parameters ATTACKER, DEFENDER
 
         $round = 1;
         $choice = $this->decideFirstAtacker();
-        while (  ($this->isDead($this->monster) == false)  && ($this->isDead($this->hero) == false))
+        while (  ($this->isDead($this->monster) == false)  && ($this->isDead($this->hero) == false) && $round <= $maxRounds)
         {
             echo "<BR/> ================ ROUND $round ================ <br/>";
             echo "<BR/> MONSTER HEALTH: " . $this->monster->getHealth() . "<BR/>";
@@ -45,6 +45,7 @@ class Battle
                     $choice = 'H';
                 }
             }
+
             $round++;
         }
 
@@ -53,10 +54,15 @@ class Battle
             echo "<br/>";
             echo "CONGRATULATIONS! You won";
         }
-        else
+        else if ( $this->isDead($this->hero) )
         {
             echo "<br/>";
             echo "GAME OVER! You lost";
+        }
+        if ($round >= $maxRounds)
+        {
+            echo "<br/>";
+            echo "IT'S A TIE! Maximum number of rounds has been simulated";
         }
     }
 
@@ -69,15 +75,38 @@ class Battle
         return false;
     }
 
+    /**
+     * Parameter 1 means defend ; parameter 0 means attack
+     * @param Entity $attacker
+     * @param Entity $defender
+     */
     private function fight(Entity $attacker, Entity &$defender)
     {
         $damage = $attacker->getStrength() - $defender->getDefence();
-        $defender->setHealth($defender->getHealth() - $damage);
         echo '<BR/>--------<BR/>';
+        if ($damage < 0)
+        {
+            $damage = 0;
+        }
+        echo "<i> Old damage: $damage </i>";
+        if ($attacker instanceof Hero)
+        {
+            //echo "<br/><br/>Intra in INSTANCEOF attacker<br/><br/>";
+            $damage = $damage * $attacker->useSkills(0);
+        }
+        else if ($defender instanceof Hero)
+        {
+            //echo "<br/><br/>Intra in INSTANCEOF defender<br/><br/>";
+            $damage = $damage * $defender->useSkills(1);
+        }
+
+        $defender->setHealth($defender->getHealth() - $damage);
+
         echo $attacker->getName() . " has attacked and did <b>" . $damage . "</b> to the defender " . $defender->getName();
         echo '<BR/>';
         echo 'Attacker health is: ' . $attacker->getHealth() . " || <b> Defender Health is: " . $defender->getHealth() . "</b>";
         echo '<BR/>';
+        echo '<BR/>--------<BR/>';
     }
 
     /**

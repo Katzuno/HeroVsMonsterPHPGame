@@ -70,4 +70,64 @@ class HeroFactory
             return 0;
         }
     }
+
+    public static function updateSkills(DatabaseController $db, Hero $hero)
+    {
+        try
+        {
+            // GET HERO ID
+            $sql = "SELECT id FROM " . getenv('HERO_TABLE') . " WHERE name = '" . $hero->getName() . "' LIMIT 1";
+
+            $heroId = HeroFactory::getHeroId($db, $hero);
+
+            $sql = "SELECT name, chance, description, type, multiplier FROM " . getenv('SKILL_TABLE') . " WHERE hero_id = $heroId";
+
+            $skills = $db->select($sql);
+            echo "<br/><br/>";
+            print_r($skills);
+            foreach ($skills as $sk)
+            {
+                $skill = SkillFactory::create($sk['name'], $sk['chance'], $sk['type']);
+                $skill->setDescription($sk['description']);
+                $skill->setMultiplier($sk['multiplier']);
+                $hero->addSkill($skill);
+            }
+            return $hero;
+
+        }
+        catch (PDOException $e)
+        {
+            echo 'Error: ' . $e->errorInfo;
+            return 0;
+        }
+    }
+
+
+    public static function addSkill(DatabaseController $db, Hero &$hero, Skill $skill)
+    {
+        try
+        {
+            // GET HERO ID
+
+            $heroId = HeroFactory::getHeroId($db, $hero);
+
+            $sql = "INSERT INTO  " . getenv('SKILL_TABLE') . "(name, chance, description, hero_id) VALUES ('" . $skill->getName() . "', " . $skill->getChance() . ", '" . $skill->getDescription() . "'," . $heroId . " )";
+
+            $db->executeQuery($sql);
+
+            $hero->addSkill($skill);
+        }
+        catch (PDOException $e)
+        {
+            echo 'Error: ' . $e->errorInfo;
+        }
+    }
+
+    private static function getHeroId(DatabaseController $db, Hero $hero)
+    {
+        $sql = "SELECT id FROM " . getenv('HERO_TABLE') . " WHERE name = '" . $hero->getName() . "' LIMIT 1";
+
+        $heroId = $db->select($sql)[0]['id'];
+        return $heroId;
+    }
 }

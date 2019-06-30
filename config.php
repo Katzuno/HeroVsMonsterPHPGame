@@ -8,3 +8,4 @@ include 'src/Models/Entity.php';
 include 'src/Models/Hero.php';
 include 'src/Models/Monster.php';
 include 'src/Models/Battle.php';
+include 'src/Models/Skill.php';
