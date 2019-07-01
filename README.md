@@ -19,6 +19,23 @@ Pentru a rula proiectul aveti nevoie de:
 php -s 127.0.0.1:8000
 </code>
 
+<h6> .env file structure </h6>
+<code>
+API_BASE_URL=http://localhost:8000/api/
+SERVER=localhost
+DATABASE=
+USER=
+PASSWORD=
+DEBUG_MODE=false
+
+HERO_TABLE=hero
+MONSTER_TABLE=monster
+SKILL_TABLE=skills
+
+ENTITY_SQL_INSERT_COLUMNS=name,health_min,health_max,strength_min,strength_max,defence_min,defence_max,speed_min,speed_max,luck_min,luck_max
+ENTITY_SQL_SELECT_ATTRIBUTE_COLUMNS=health_min,health_max,strength_min,strength_max,defence_min,defence_max,speed_min,speed_max,luck_min,luck_max
+</code>
+
 
 <br/>
 Explicarea structurii: 
