@@ -9,6 +9,24 @@ $router->get('/', function () {
     return '<p>This is homepage!</p>';
 });
 
+/**
+ * @api {post} api/hero/create
+ * @apiName addHero
+ * @apiGroup Hero
+ *
+ * @apiParam {String} name
+ * @apiParam {int} healthMin
+ * @apiParam {int} healthMax
+ * @apiParam {int} strengthMin
+ * @apiParam {int} strengthMax
+ * @apiParam {int} defMin
+ * @apiParam {int} defMax
+ * @apiParam {int} speedMin
+ * @apiParam {int} speedMax
+ * @apiParam {int} luckMin
+ * @apiParam {int} luckMax
+ * @apiSuccess {JSON} success:true, hero:[createdObject]
+ */
 $router->post('/api/hero/create', function ($request) use ($db) {
     try {
         $json = json_decode($request->getBody()->getContents() );
@@ -27,6 +45,24 @@ $router->post('/api/hero/create', function ($request) use ($db) {
     }
 });
 
+/**
+ * @api {post} api/monster/create
+ * @apiName addMonster
+ * @apiGroup Monster
+ *
+ * @apiParam {String} name
+ * @apiParam {int} healthMin
+ * @apiParam {int} healthMax
+ * @apiParam {int} strengthMin
+ * @apiParam {int} strengthMax
+ * @apiParam {int} defMin
+ * @apiParam {int} defMax
+ * @apiParam {int} speedMin
+ * @apiParam {int} speedMax
+ * @apiParam {int} luckMin
+ * @apiParam {int} luckMax
+ * @apiSuccess {JSON} success:true, monster:[createdObject]
+ */
 $router->post('/api/monster/create', function ($request) use ($db) {
     try {
         $json = json_decode($request->getBody()->getContents() );
@@ -45,13 +81,24 @@ $router->post('/api/monster/create', function ($request) use ($db) {
     }
 });
 
+/**
+ * @api {post} api/skill/create
+ * @apiName addSkill
+ * @apiGroup Skill
+ *
+ * @apiParam {String} skillName
+ * @apiParam {int} chance
+ * @apiParam {int} type
+ * @apiParam {int} multiplier
+ * @apiParam {String} desc
+ * @apiSuccess {JSON} success:true
+ */
 $router->post('/api/skill/create', function ($request) use ($db) {
     try {
         $json = json_decode($request->getBody()->getContents() );
         $skill = SkillFactory::build($db, $json->name, $json->chance, $json->type, $json->multiplier, $json->desc);
         $response = array(
             'success' => true,
-            'monster' => $skill
         );
         return json_encode($response);
     }
@@ -61,6 +108,20 @@ $router->post('/api/skill/create', function ($request) use ($db) {
     }
 });
 
+/**
+ * @api {post} api/hero/addSkill
+ * @apiName addSkill
+ * @apiGroup Skill
+ *
+ * @apiParam {String} skillName
+ * @apiParam {int} chance
+ * @apiParam {int} type
+ * @apiParam {int} multiplier
+ * @apiParam {String} desc
+ * @apiParam {String} heroName
+ *
+ * @apiSuccess {JSON} success:true
+ */
 $router->post('/api/hero/addSkill', function ($request) use ($db) {
     try {
         $json = json_decode($request->getBody()->getContents() );
@@ -79,6 +140,16 @@ $router->post('/api/hero/addSkill', function ($request) use ($db) {
     }
 });
 
+/**
+ * @api {post} api/battle/start
+ * @apiName start battle between a hero and a monster
+ * @apiGroup Battle
+ *
+ * @apiParam {String} heroName
+ * @apiParam {String} monsterName
+ *
+ * @apiSuccess {JSON} success:true
+ */
 $router->post('/api/battle/start', function ($request) use ($db) {
     try {
         $json = json_decode($request->getBody()->getContents() );
@@ -94,7 +165,15 @@ $router->post('/api/battle/start', function ($request) use ($db) {
         return json_encode($e->getCode());
     }
 });
-
+/**
+ * @api {get} api/hero/getAttributes/:heroName Request Hero attributes
+ * @apiName get Hero Attributes
+ * @apiGroup Hero
+ *
+ * @apiParam {String} heroName Hero Unique Name.
+ *
+ * @apiSuccess {JSON} hero : [ health, strength, defence, speed, luck]
+ */
 $router->get('/api/hero/getAttributes/{heroName}', function ($heroName) use ($db) {
     try {
         $hero = HeroFactory::getHeroByName($db, $heroName);
@@ -111,3 +190,4 @@ $router->get('/api/hero/getAttributes/{heroName}', function ($heroName) use ($db
     }
 });
 $router->dispatch();
+
