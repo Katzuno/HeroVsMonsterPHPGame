@@ -3,6 +3,7 @@
         "phpunit/phpunit": "7",
         "miladrahimi/phprouter": "4.*",
         "ext-PDO": "^7.3",
-        "symfony/dotenv": "^4.3"
+        "symfony/dotenv": "^4.3",
+      "ext-json": "*"
     }
 }

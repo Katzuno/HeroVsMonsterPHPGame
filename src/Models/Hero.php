@@ -64,6 +64,17 @@ class Hero extends Entity
         }
     }
 
-
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'health' => $this->getHealth(),
+            'strength' => $this->getStrength(),
+            'defence' => $this->getDefence(),
+            'speed' => $this->getSpeed(),
+            'luck' => $this->getLuck(),
+            'skills' => $this->getSkills()
+        ];
+    }
 
 }

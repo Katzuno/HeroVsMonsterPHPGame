@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS Skills (
     name VARCHAR(16),
     chance TINYINT,
     description VARCHAR(256),
+    type BOOLEAN,
+    multiplier SMALLINT,
     hero_id INT,
     CONSTRAINT FK_Skills FOREIGN KEY (hero_id) REFERENCES Hero(id)
 );

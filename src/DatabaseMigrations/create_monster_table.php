@@ -3,7 +3,7 @@
 $sql = "
 CREATE TABLE IF NOT EXISTS Monster (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(16),
+    name VARCHAR(16) UNIQUE,
     health_min TINYINT,
     health_max TINYINT,
     strength_min TINYINT,

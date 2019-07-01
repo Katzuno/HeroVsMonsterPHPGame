@@ -1,6 +1,6 @@
 <?php
 
-class Entity
+class Entity implements JsonSerializable
 {
     protected $name;
     protected $health;
@@ -113,5 +113,22 @@ class Entity
     public function setLuck($luck): void
     {
         $this->luck = $luck;
+    }
+
+    /**
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'health' => $this->getHealth(),
+            'strength' => $this->getStrength(),
+            'defence' => $this->getDefence(),
+            'speed' => $this->getSpeed(),
+            'luck' => $this->getLuck(),
+        ];
     }
 }

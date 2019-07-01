@@ -37,6 +37,7 @@ class HeroFactory
             $sql = "SELECT " . getenv('ENTITY_SQL_SELECT_ATTRIBUTE_COLUMNS') . " FROM " . getenv('HERO_TABLE') . " WHERE name = '$name' LIMIT 1";
             $hero_ranges= $db->select($sql)[0];
             $hero = new Hero($name, rand($hero_ranges['health_min'], $hero_ranges['health_max']), rand($hero_ranges['strength_min'], $hero_ranges['strength_max']), rand($hero_ranges['defence_min'], $hero_ranges['defence_max']), rand($hero_ranges['speed_min'], $hero_ranges['speed_max']), rand($hero_ranges['luck_min'], $hero_ranges['luck_max']));
+            HeroFactory::updateSkills($db, $hero);
             return $hero;
         }
         catch (PDOException $e)
