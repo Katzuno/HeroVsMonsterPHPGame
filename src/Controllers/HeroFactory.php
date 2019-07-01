@@ -131,4 +131,24 @@ class HeroFactory
         $heroId = $db->select($sql)[0]['id'];
         return $heroId;
     }
+
+    public static function delete(DatabaseController $db, Hero $hero)
+    {
+        try
+        {
+            $sql = "DELETE FROM " . getenv('HERO_TABLE') . " WHERE name = '" . $hero->getName() . "'";
+
+            $db->executeQuery($sql);
+
+            if ( getenv('DEBUG_MODE') == 'true')
+            {
+                echo "<br/>Query is $sql<br/>";
+            }
+        }
+        catch (PDOException $e)
+        {
+            echo 'Error: ' . $e->errorInfo;
+            return 0;
+        }
+    }
 }

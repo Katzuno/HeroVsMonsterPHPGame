@@ -70,4 +70,25 @@ class MonsterFactory
             return 0;
         }
     }
+
+
+    public static function delete(DatabaseController $db, Monster $monster)
+    {
+        try
+        {
+            $sql = "DELETE FROM " . getenv('MONSTER_TABLE') . " WHERE name = '" . $monster->getName() . "'";
+
+            $db->executeQuery($sql);
+
+            if ( getenv('DEBUG_MODE') == 'true')
+            {
+                echo "<br/>Query is $sql<br/>";
+            }
+        }
+        catch (PDOException $e)
+        {
+            echo 'Error: ' . $e->errorInfo;
+            return 0;
+        }
+    }
 }

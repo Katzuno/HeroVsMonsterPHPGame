@@ -4,6 +4,7 @@
         "miladrahimi/phprouter": "4.*",
         "ext-PDO": "^7.3",
         "symfony/dotenv": "^4.3",
-      "ext-json": "*"
+      "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.3"
     }
 }
